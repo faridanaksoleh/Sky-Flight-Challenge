@@ -145,7 +145,7 @@ function startGame(THREE) {
   }
 
   // ---------- Awan ----------
-  const cloudMat = new THREE.MeshStandardMaterial({ color: 0xffffff, flatShading: true, roughness: 1 });
+  const cloudMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xbfd6e0, emissiveIntensity: 0.6, flatShading: true, roughness: 1 });
   const clouds = [];
   for (let i = 0; i < 18; i++) {
     const c = new THREE.Group();
@@ -196,7 +196,7 @@ function startGame(THREE) {
   const ringGeo = new THREE.TorusGeometry(CFG.ringR, 0.8, 10, 40);
   const haloGeo = new THREE.TorusGeometry(CFG.ringR, 2.2, 8, 40);
   const activeMat = new THREE.MeshBasicMaterial({ color: 0xffe14d });
-  const idleMat = new THREE.MeshStandardMaterial({ color: 0xffd23a, emissive: 0x7a5a00, emissiveIntensity: 0.6 });
+  const idleMat = new THREE.MeshStandardMaterial({ color: 0xffe14d, emissive: 0xffc928, emissiveIntensity: 0.45 });
   const haloMat = new THREE.MeshBasicMaterial({ color: 0xffe14d, transparent: true, opacity: 0.3, depthWrite: false, blending: THREE.AdditiveBlending });
   const rings = [];
 
