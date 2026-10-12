@@ -35,17 +35,36 @@ export class MicrobitControls {
       this.status('Browser ini tidak mendukung Web Serial. Pakai Chrome atau Edge.');
       return false;
     }
+    if (this.connected) { this.status('Sudah tersambung.'); return true; }
     try {
       this.port = await navigator.serial.requestPort();
-      await this.port.open({ baudRate: 115200 });
-      this.connected = true;
-      this.status('Tersambung. Menunggu data...');
-      this.readLoop();
-      return true;
     } catch (e) {
-      this.status('Gagal menyambung: ' + (e && e.message ? e.message : e));
+      this.status('Tidak ada port dipilih.');
       return false;
     }
+    // Coba buka beberapa kali (port kadang masih sibuk sesaat)
+    let lastErr = null;
+    for (let i = 0; i < 3; i++) {
+      try {
+        if (this.port.readable) { lastErr = null; break; } // sudah terbuka
+        await this.port.open({ baudRate: 115200 });
+        lastErr = null;
+        break;
+      } catch (e) {
+        lastErr = e;
+        if (e && e.name === 'InvalidStateError') { lastErr = null; break; } // sudah terbuka
+        try { await this.port.close(); } catch (_) {}
+        await new Promise(r => setTimeout(r, 400));
+      }
+    }
+    if (lastErr) {
+      this.status('Port micro:bit sedang dipakai aplikasi lain. Tutup tab game lain, tab MakeCode (serial console), atau aplikasi serial lain, lalu cabut-colok kabel USB dan coba lagi.');
+      return false;
+    }
+    this.connected = true;
+    this.status('Tersambung. Menunggu data...');
+    this.readLoop();
+    return true;
   }
 
   async readLoop() {
