@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sky Flight Challenge</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Tempat gambar 3D -->
+  <div id="game"></div>
+
+  <!-- HUD atas -->
+  <div id="hudTop" class="hud hidden">
+    <div class="stat"><span class="label">Waktu</span><span id="hudTime">00:00.0</span></div>
+    <div class="stat"><span class="label">Ring</span><span id="hudRing">0/10</span></div>
+    <div class="stat"><span class="label">Skor</span><span id="hudScore">0</span></div>
+    <div class="btns">
+      <button id="btnPause" class="small">Jeda</button>
+      <button id="btnRestart" class="small">Ulang</button>
+      <button id="btnMute" class="small">Suara: On</button>
+    </div>
+  </div>
+
+  <!-- HUD bawah -->
+  <div id="hudBottom" class="hud hidden">
+    <div id="arrow">&#9650;</div>
+    <div class="stat"><span class="label">Jarak ring</span><span id="hudDist">0 m</span></div>
+    <div class="stat"><span class="label">Ketinggian</span><span id="hudAlt">0 m</span></div>
+    <div class="stat"><span class="label">Kontrol</span><span id="hudSource">Keyboard</span></div>
+  </div>
+
+  <!-- Menu awal -->
+  <div id="menu" class="overlay">
+    <div class="card wide">
+      <h1>Sky Flight Challenge</h1>
+      <p class="sub">Terbangkan pesawat melewati 10 ring kuning secepat mungkin!</p>
+      <div class="cols">
+        <div>
+          <h3>Kontrol keyboard</h3>
+          <ul>
+            <li>&larr; / &rarr; atau A / D : belok</li>
+            <li>&uarr; atau W : naik, &darr; atau S : turun</li>
+            <li>P / Esc : jeda, R : ulang, M : suara</li>
+            <li>C : kalibrasi micro:bit, Enter / Spasi : mulai</li>
+          </ul>
+          <button id="btnStart" class="big">Mulai Terbang</button>
+          <p id="bestText" class="muted"></p>
+        </div>
+        <div class="panel">
+          <h3>Kontrol micro:bit V2 (USB Serial)</h3>
+          <div class="row">
+            <button id="btnConnect">Sambung micro:bit</button>
+            <button id="btnCalib">Kalibrasi (C)</button>
+          </div>
+          <label><input type="checkbox" id="chkRoll"> Balik kiri/kanan</label>
+          <label><input type="checkbox" id="chkPitch"> Balik naik/turun</label>
+          <p id="mbStatus" class="muted">Belum tersambung.</p>
+          <p class="muted small-text">Cara memegang: kotak 25 LED dan tombol A/B menghadap ATAS, kabel USB mengarah ke DEPAN (menjauhi badan).</p>
+          <div class="test">
+            <span class="label">Tes arah</span>
+            <div class="bar h"><div id="barRoll" class="dot"></div></div>
+            <div class="bar v"><div id="barPitch" class="dot"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hitung mundur -->
+  <div id="countdown" class="overlay hidden">
+    <div class="card"><div id="countNum" class="count">3</div><p>Pegang micro:bit datar</p></div>
+  </div>
+
+  <!-- Layar jeda -->
+  <div id="pauseScreen" class="overlay hidden">
+    <div class="card">
+      <h2>Jeda</h2>
+      <button id="btnResume" class="big">Lanjut</button>
+      <button id="btnPauseRestart">Main Ulang</button>
+    </div>
+  </div>
+
+  <!-- Layar menang -->
+  <div id="winScreen" class="overlay hidden">
+    <div class="card">
+      <h2>Kamu Menang!</h2>
+      <p>Waktu: <b id="winTime">0</b></p>
+      <p>Skor ring: <b id="winScore">0</b></p>
+      <p>Bonus kecepatan: <b id="winBonus">0</b></p>
+      <p>Total: <b id="winTotal">0</b></p>
+      <p>Waktu terbaik: <b id="winBest">-</b></p>
+      <button id="btnWinRestart" class="big">Main Lagi</button>
+    </div>
+  </div>
+
+  <!-- Pesan error ramah -->
+  <div id="errorCard" class="overlay hidden">
+    <div class="card">
+      <h2>Game belum bisa dimuat</h2>
+      <p id="errorText"></p>
+      <ul>
+        <li>Buka lewat VS Code: klik kanan index.html &rarr; "Open with Live Server".</li>
+        <li>Pastikan internet aktif, atau</li>
+        <li>Simpan three.module.js ke folder libs/ (lihat README, Mode offline).</li>
+      </ul>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
